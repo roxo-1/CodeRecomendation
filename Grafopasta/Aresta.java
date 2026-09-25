@@ -1,3 +1,13 @@
+/*
+Carolina Lee 10440304
+Pedro Casas Pequeno Junior 10437031
+Pedro Gabriel Guimarães Fernandes 10437465
+
+Esse arquivo baseicamente transforma a aresta em um classe, assim podemos
+usar os dados dela como objeto, possibilitando o uso de maneira mais organizada que 
+um array
+*/
+
 package Grafopasta;
 
 // Representa uma aresta do grafo: liga dois vertices (pelo nome) e tem um peso.

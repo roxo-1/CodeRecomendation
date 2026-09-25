@@ -1,3 +1,12 @@
+/*
+Carolina Lee 10440304
+Pedro Casas Pequeno Junior 10437031
+Pedro Gabriel Guimarães Fernandes 10437465
+
+Esse arquivo é onde estruturamos a leitura do csv e a escrita da saida, no mesmo estilo dos exercicios
+realizados da materia.
+*/
+
 package Grafopasta;
 
 import java.io.BufferedReader;

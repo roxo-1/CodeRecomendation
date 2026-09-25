@@ -1,3 +1,12 @@
+/*
+Carolina Lee 10440304
+Pedro Casas Pequeno Junior 10437031
+Pedro Gabriel Guimarães Fernandes 10437465
+
+Nesse arquivo, usamos a estrutura que tinhamos dos exercicios e aplicamos no nosso caso, reaproveitando
+algumas funçoes que podem ser uteis no futuro, como a remoção de vertice e o calculo do grau.
+*/
+
 package Grafopasta;
 
 // Estrutura Matriz de Adjacência para um grafo NÃO DIRIGIDO e PONDERADO
