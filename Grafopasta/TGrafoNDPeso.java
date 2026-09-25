@@ -1,3 +1,5 @@
+package Grafopasta;
+
 // Estrutura Matriz de Adjacência para um grafo NÃO DIRIGIDO e PONDERADO
 // (junta a ideia de peso do TGrafo com a simetria do TGrafoND)
 public class TGrafoNDPeso {
@@ -110,3 +112,4 @@ public class TGrafoNDPeso {
 		System.out.println("\nGrau do vértice " + v + " é " + degree);
 		return degree;
 	}
+}

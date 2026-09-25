@@ -1,0 +1,700 @@
+no_a,no_b,peso
+VBA,Visual Basic .NET,0.774
+"PL/SQL,","Transact-SQL, (T-SQL,)",0.657
+F#,OCaml,0.6333
+SAS,Stata,0.588
+SystemVerilog,Verilog,0.5626
+Dart,TypeScript,0.5623
+"PL/pgSQL,","Transact-SQL, (T-SQL,)",0.5577
+GDScript,Mojo,0.5567
+"CommonLisp,",Racket,0.5557
+Apex,Haxe,0.5539
+Elm,Haskell,0.5451
+Apex,X++,0.5266
+"PL/pgSQL,","PL/SQL,",0.5209
+Dart,X++,0.5174
+D,Dart,0.5067
+D,Mojo,0.5031
+Verilog,VHDL,0.5009
+C++,D,0.4971
+Haxe,Solidity,0.4969
+Kotlin,Scala,0.495
+D,Rust,0.4878
+Ruby,Smalltalk (Pharo),0.4865
+Apex,Dart,0.4847
+CUDA C/C++,OpenCL,0.4831
+Dart,Haxe,0.4779
+HiveQL (Apache Hive),"PL/pgSQL,",0.4748
+HiveQL (Apache Hive),"SQL,",0.4689
+Crystal,F#,0.4656
+MQL5,Solidity,0.4635
+HCL (Terraform),"SQL,",0.4633
+Dart,Solidity,0.4619
+GAMS,"SQL,",0.4615
+D,Haxe,0.4608
+Dart,Kotlin,0.4606
+Solidity,X++,0.4591
+Java,Rust,0.4526
+F#,Scala,0.4516
+Elixir,Ruby,0.4516
+ABAP,PL/I,0.45
+GraphQL,HiveQL (Apache Hive),0.4467
+Groovy,Python,0.4465
+Julia,MATLAB,0.4441
+ABAP,"COBOL,",0.4434
+Crystal,"Delphi (Object Pascal,)",0.4431
+Haxe,X++,0.4428
+Apex,D,0.4389
+Rust,Solidity,0.4382
+CFML (ColdFusion),PHP,0.4374
+GDScript,Groovy,0.4374
+Apex,Solidity,0.4366
+Dart,Rust,0.4365
+D,X++,0.4332
+Clojure,"CommonLisp,",0.4325
+D,Solidity,0.4307
+Crystal,Ruby,0.4307
+Erlang,Prolog,0.4274
+GraphQL,"SQL,",0.4268
+ABAP,VBA,0.425
+C++,"Delphi (Object Pascal,)",0.4229
+C#,Swift,0.4211
+Java,Solidity,0.42
+"Delphi (Object Pascal,)",Haxe,0.4195
+Haxe,Rust,0.4194
+Kotlin,Swift,0.4187
+C++,"Fortran,",0.4169
+HCL (Terraform),HiveQL (Apache Hive),0.4162
+"COBOL,",RPG,0.415
+GraphQL,HCL (Terraform),0.4145
+Racket,Scheme,0.4134
+C++,Groovy,0.4131
+OCaml,Scala,0.4124
+C++,GDScript,0.412
+D,Java,0.4111
+OpenCL,Zig,0.4107
+C#,Java,0.4104
+Perl,Tcl,0.4104
+D,Groovy,0.4101
+CUDA C/C++,MQL5,0.409
+MQL5,X++,0.4086
+Kotlin,TypeScript,0.4083
+"COBOL,",NATURAL,0.4079
+Crystal,OCaml,0.4076
+OCaml,PL/I,0.4073
+Haxe,MQL5,0.4067
+GDScript,Python,0.4064
+"COBOL,",MQL5,0.4061
+"CommonLisp,",Scheme,0.4059
+Bash / Shell Script,Tcl,0.4052
+SystemVerilog,VHDL,0.405
+C#,Rust,0.4042
+APL,Q (kdb+),0.4026
+Go,Java,0.4013
+CUDA C/C++,Java,0.4003
+Java,Scala,0.3998
+Dart,MQL5,0.3993
+NATURAL,PL/I,0.3988
+Rust,Scala,0.3986
+"Fortran,",Haxe,0.3986
+Java,MQL5,0.3984
+Elixir,Erlang,0.398
+Q (kdb+),R,0.397
+AWK,Perl,0.3969
+Apex,"Fortran,",0.3968
+Haxe,Objective-C,0.3961
+"Delphi (Object Pascal,)",Zig,0.3952
+Apex,Rust,0.3923
+Q (kdb+),SAS,0.39
+Apex,"Delphi (Object Pascal,)",0.3881
+Rust,X++,0.3878
+F#,Rust,0.3862
+CUDA C/C++,Rust,0.3862
+Ruby,Wolfram Language,0.3861
+MQL5,Rust,0.3857
+Clojure,Elixir,0.3854
+"Delphi (Object Pascal,)",Swift,0.3837
+Haxe,Verilog,0.3833
+TypeScript,X++,0.3833
+Go,Zig,0.3824
+Mojo,Python,0.3815
+CUDA C/C++,Solidity,0.3813
+"COBOL,",PL/I,0.3813
+"CommonLisp,",Prolog,0.3801
+F#,TypeScript,0.3798
+"COBOL,",Stata,0.3794
+Rust,Swift,0.3791
+ABAP,NATURAL,0.3786
+"Delphi (Object Pascal,)","Fortran,",0.3782
+Prolog,Q (kdb+),0.3782
+Ada 2022,PL/I,0.3775
+Erlang,Smalltalk (Pharo),0.3774
+Racket,Smalltalk (Pharo),0.3771
+MATLAB,Wolfram Language,0.3771
+Kotlin,X++,0.3769
+Apex,Objective-C,0.3762
+AWK,Bash / Shell Script,0.376
+C#,MQL5,0.3754
+"PL/SQL,",VHDL,0.375
+HiveQL (Apache Hive),"Transact-SQL, (T-SQL,)",0.375
+OpenCL,SystemVerilog,0.375
+RPG,"Transact-SQL, (T-SQL,)",0.375
+Apex,C#,0.375
+"PL/SQL,",RPG,0.375
+Lua,R,0.3747
+Mojo,Nim,0.3742
+Rust,Zig,0.3741
+C#,Dart,0.3731
+NATURAL,RPG,0.372
+"PL/pgSQL,","SQL,",0.372
+GDScript,Haxe,0.3719
+Dart,Scala,0.3715
+PowerShell,Ruby,0.3713
+JavaScript,PHP,0.3696
+C#,"Delphi (Object Pascal,)",0.3694
+APL,Stata,0.3691
+APL,R,0.3691
+ABAP,X++,0.3687
+C#,Zig,0.3674
+Kotlin,Solidity,0.3672
+D,Kotlin,0.3671
+"Delphi (Object Pascal,)",MQL5,0.3667
+Apex,Verilog,0.366
+GAMS,RPG,0.3652
+Ada 2022,Go,0.3648
+Ada 2022,TypeScript,0.3641
+ABAP,Visual Basic .NET,0.3639
+C#,TypeScript,0.3636
+R,Stata,0.3634
+D,GDScript,0.3634
+CFML (ColdFusion),Perl,0.3625
+Apex,MQL5,0.3621
+Dart,F#,0.3619
+Crystal,Elixir,0.3607
+GAMS,HCL (Terraform),0.3607
+GAMS,HiveQL (Apache Hive),0.3606
+"COBOL,",Kotlin,0.3596
+Solidity,Verilog,0.3595
+D,MQL5,0.3594
+D,Julia,0.3593
+ABAP,Solidity,0.3591
+"COBOL,","SQL,",0.3587
+GAMS,GraphQL,0.3587
+Elm,Rust,0.3586
+Clojure,Scheme,0.3584
+Apex,TypeScript,0.3583
+"PL/pgSQL,",SAS,0.3581
+"Delphi (Object Pascal,)",Rust,0.3576
+Groovy,Haxe,0.3567
+Scala,X++,0.3567
+Scala,Swift,0.3562
+Apex,Groovy,0.3552
+"COBOL,",LabVIEW,0.3551
+C++,CUDA C/C++,0.3547
+"Fortran,",SystemVerilog,0.3542
+Clojure,Erlang,0.3541
+C++,Haxe,0.3537
+Bash / Shell Script,CFML (ColdFusion),0.3537
+Scala,SystemVerilog,0.3531
+Crystal,TypeScript,0.3529
+Q (kdb+),Stata,0.3528
+Groovy,PowerShell,0.3525
+NATURAL,Stata,0.3524
+Apex,C++,0.352
+NATURAL,"PL/pgSQL,",0.3514
+C#,Scala,0.3513
+Elm,F#,0.3513
+Q (kdb+),Wolfram Language,0.3513
+"PL/pgSQL,",Scala,0.3513
+Smalltalk (Pharo),Wolfram Language,0.3507
+"COBOL,",X++,0.3506
+Swift,Zig,0.3506
+PL/I,VHDL,0.3504
+Bash / Shell Script,Perl,0.3501
+GDScript,Nim,0.3499
+Elm,TypeScript,0.3493
+"CommonLisp,",R,0.3492
+"CommonLisp,",Wolfram Language,0.3491
+MATLAB,Stata,0.3491
+F#,Swift,0.3491
+Haskell,Scala,0.3489
+LabVIEW,"SQL,",0.3484
+Apex,Scala,0.3482
+Rust,Verilog,0.348
+D,PowerShell,0.3476
+Bash / Shell Script,PHP,0.347
+GraphQL,"PL/pgSQL,",0.347
+C++,Rust,0.3469
+Dart,Verilog,0.3468
+Prolog,Stata,0.3466
+Clojure,Racket,0.3463
+Kotlin,Rust,0.3461
+Lua,Stata,0.3454
+OCaml,VHDL,0.3446
+CUDA C/C++,"Fortran,",0.3446
+Python,R,0.3445
+Elm,Kotlin,0.3443
+Scheme,Smalltalk (Pharo),0.344
+"Fortran,",OpenCL,0.3438
+Elm,Swift,0.3438
+ABAP,Apex,0.3438
+"CommonLisp,",Smalltalk (Pharo),0.3434
+Racket,Wolfram Language,0.3433
+OpenCL,Verilog,0.3432
+CUDA C/C++,X++,0.3431
+C#,Solidity,0.343
+C#,CUDA C/C++,0.3429
+F#,Java,0.3423
+C++,Julia,0.3419
+Dart,Elm,0.3413
+Dart,Java,0.3411
+"CommonLisp,",Erlang,0.341
+"Delphi (Object Pascal,)",Visual Basic .NET,0.341
+"CommonLisp,",Julia,0.3405
+Kotlin,Visual Basic .NET,0.34
+TypeScript,Zig,0.3399
+Erlang,Julia,0.3399
+"CommonLisp,",Python,0.3398
+Go,Swift,0.3395
+"COBOL,",GAMS,0.3388
+ABAP,MQL5,0.3385
+RPG,"SQL,",0.3384
+Haxe,TypeScript,0.3381
+"Fortran,",Rust,0.338
+Scheme,Wolfram Language,0.3377
+Ada 2022,"COBOL,",0.3375
+Scala,TypeScript,0.3375
+"COBOL,",Solidity,0.3374
+"Delphi (Object Pascal,)",Kotlin,0.3373
+Rust,TypeScript,0.3372
+D,TypeScript,0.3372
+CUDA C/C++,Zig,0.3372
+C#,X++,0.3372
+D,Scala,0.337
+Kotlin,MQL5,0.3369
+Haskell,Swift,0.3367
+GAMS,LabVIEW,0.3366
+F#,X++,0.3365
+R,SAS,0.3365
+Go,Verilog,0.3363
+Apex,Kotlin,0.3361
+NATURAL,OCaml,0.336
+APL,Wolfram Language,0.336
+MQL5,SystemVerilog,0.3358
+MQL5,NATURAL,0.3358
+Mojo,Solidity,0.3356
+Ada 2022,NATURAL,0.3354
+AWK,Tcl,0.3351
+OpenCL,X++,0.3351
+C#,Haxe,0.3351
+MQL5,Verilog,0.335
+Elm,Scala,0.3346
+Mojo,Scala,0.3344
+Bash / Shell Script,Groovy,0.3343
+Elm,Zig,0.3342
+ABAP,Ada 2022,0.3339
+"COBOL,",Swift,0.3336
+APL,Prolog,0.3333
+OpenCL,Solidity,0.3333
+LabVIEW,RPG,0.3333
+ABAP,"Transact-SQL, (T-SQL,)",0.3333
+Go,Rust,0.3332
+"Fortran,",Solidity,0.3331
+CUDA C/C++,D,0.333
+Dart,Mojo,0.3329
+"Fortran,",RPG,0.3328
+Kotlin,Zig,0.3326
+NATURAL,X++,0.3326
+Erlang,Scheme,0.3324
+Apex,Java,0.332
+"COBOL,",Go,0.3314
+C#,Visual Basic .NET,0.3307
+R,Scheme,0.33
+CUDA C/C++,NATURAL,0.3295
+"COBOL,","PL/pgSQL,",0.3295
+CUDA C/C++,Verilog,0.3292
+"Delphi (Object Pascal,)",Groovy,0.3287
+Lua,Python,0.3287
+Verilog,X++,0.3286
+Ada 2022,VHDL,0.3285
+OCaml,Zig,0.3285
+MQL5,TypeScript,0.3284
+Lua,PowerShell,0.3281
+Ruby,Scheme,0.328
+Haskell,Kotlin,0.3279
+Groovy,Smalltalk (Pharo),0.3277
+VBA,X++,0.3277
+OCaml,Rust,0.3276
+"COBOL,",Scala,0.3274
+"Fortran,",X++,0.3273
+Ada 2022,Kotlin,0.3271
+Dart,"Delphi (Object Pascal,)",0.3268
+ABAP,"Fortran,",0.3263
+C#,F#,0.3262
+Ada 2022,"Delphi (Object Pascal,)",0.3256
+MATLAB,R,0.3251
+Solidity,TypeScript,0.325
+"Delphi (Object Pascal,)",Solidity,0.3249
+D,Nim,0.3249
+Swift,TypeScript,0.3248
+Haxe,Kotlin,0.3248
+Java,Zig,0.3245
+"Delphi (Object Pascal,)",Java,0.3242
+Crystal,Haxe,0.3241
+NATURAL,Solidity,0.324
+Clojure,Groovy,0.3239
+Mojo,Rust,0.3238
+Scala,Visual Basic .NET,0.3235
+Python,Stata,0.3233
+Crystal,Dart,0.3221
+C#,Kotlin,0.322
+PowerShell,Scheme,0.322
+C,"Delphi (Object Pascal,)",0.322
+Erlang,Racket,0.3217
+"Delphi (Object Pascal,)",X++,0.3214
+Java,TypeScript,0.3214
+OCaml,Verilog,0.3213
+C++,Mojo,0.3212
+PowerShell,Wolfram Language,0.3211
+Groovy,Ruby,0.3209
+MQL5,OpenCL,0.3208
+ABAP,OpenCL,0.3206
+Python,SAS,0.32
+Crystal,MQL5,0.3198
+Julia,Scheme,0.3195
+PowerShell,Smalltalk (Pharo),0.3193
+"CommonLisp,",D,0.3192
+Haxe,Java,0.3192
+Elixir,Smalltalk (Pharo),0.3189
+Crystal,Swift,0.3187
+Erlang,Wolfram Language,0.3181
+Python,Ruby,0.318
+C++,Java,0.318
+CFML (ColdFusion),Tcl,0.3176
+F#,"PL/pgSQL,",0.3175
+D,Verilog,0.3174
+Ada 2022,OCaml,0.3174
+Apex,VBA,0.3172
+Clojure,R,0.317
+"COBOL,",OCaml,0.3169
+Haskell,Scheme,0.3169
+"COBOL,",VBA,0.3168
+"COBOL,",Visual Basic .NET,0.3168
+CUDA C/C++,Dart,0.3168
+MQL5,Scala,0.3167
+F#,HiveQL (Apache Hive),0.3167
+ABAP,OCaml,0.3165
+"Delphi (Object Pascal,)",GDScript,0.3164
+Scala,Zig,0.3162
+ABAP,Kotlin,0.3162
+CUDA C/C++,Go,0.3162
+"COBOL,",Dart,0.3161
+"PL/SQL,",VBA,0.3161
+Ada 2022,MQL5,0.316
+"CommonLisp,",Ruby,0.3159
+ABAP,Dart,0.3159
+Go,OCaml,0.3158
+"Fortran,",MQL5,0.3158
+Lua,Ruby,0.3158
+R,Racket,0.3157
+PL/I,Zig,0.3157
+F#,Kotlin,0.3156
+Apex,GDScript,0.3156
+Scala,Solidity,0.3156
+Clojure,Smalltalk (Pharo),0.3156
+Verilog,Zig,0.3156
+R,Wolfram Language,0.3156
+Ruby,Tcl,0.3155
+Ada 2022,CUDA C/C++,0.3155
+PowerShell,R,0.3154
+"Fortran,",Zig,0.3154
+Dart,Swift,0.3154
+Kotlin,Mojo,0.3153
+C#,Verilog,0.3152
+Mojo,PowerShell,0.3152
+"Fortran,",GDScript,0.3151
+Ada 2022,Solidity,0.315
+"Delphi (Object Pascal,)",Objective-C,0.315
+Java,Kotlin,0.315
+Java,X++,0.3149
+Forth,Perl,0.3147
+"COBOL,",F#,0.3145
+PL/I,RPG,0.3145
+"Transact-SQL, (T-SQL,)",VBA,0.3144
+Ada 2022,X++,0.3143
+Lua,SAS,0.3142
+Ada 2022,C,0.3142
+Clojure,Lua,0.3142
+Elixir,Python,0.3141
+"COBOL,",SAS,0.3137
+"Fortran,",Java,0.3135
+HiveQL (Apache Hive),Scala,0.3135
+"Fortran,",Objective-C,0.3133
+NATURAL,"PL/SQL,",0.3125
+NATURAL,"Transact-SQL, (T-SQL,)",0.3125
+Clojure,Q (kdb+),0.3125
+Go,OpenCL,0.3125
+HCL (Terraform),"PL/pgSQL,",0.3125
+"PL/pgSQL,",VHDL,0.3125
+SystemVerilog,Zig,0.3125
+"PL/pgSQL,",RPG,0.3125
+OpenCL,TypeScript,0.3125
+"Delphi (Object Pascal,)",SystemVerilog,0.3125
+Apex,SystemVerilog,0.3125
+ABAP,"PL/pgSQL,",0.3125
+Haxe,SystemVerilog,0.3125
+Visual Basic .NET,Zig,0.3122
+"Fortran,",PL/I,0.3116
+Ada 2022,Zig,0.3114
+ABAP,CUDA C/C++,0.3113
+"Fortran,",MATLAB,0.311
+"Fortran,",Verilog,0.3109
+Go,Kotlin,0.3108
+Python,Q (kdb+),0.3107
+Mojo,Ruby,0.3106
+Bash / Shell Script,Objective-C,0.3101
+Clojure,Python,0.3101
+Julia,Mojo,0.31
+Dart,Julia,0.31
+Dart,"Fortran,",0.3099
+Dart,NATURAL,0.3098
+"COBOL,",VHDL,0.3096
+SystemVerilog,VBA,0.3094
+Java,OpenCL,0.3093
+Haxe,Swift,0.3088
+HiveQL (Apache Hive),NATURAL,0.3087
+C#,Crystal,0.3082
+Bash / Shell Script,Rexx,0.308
+Visual Basic .NET,X++,0.3076
+C#,OpenCL,0.3076
+Forth,Tcl,0.3076
+Lua,MATLAB,0.3075
+CFML (ColdFusion),Forth,0.3075
+Kotlin,VBA,0.3074
+D,Racket,0.3072
+CUDA C/C++,Haxe,0.307
+Perl,PHP,0.3069
+R,Ruby,0.3067
+Objective-C,Solidity,0.3066
+Clojure,Wolfram Language,0.3064
+Ada 2022,Rust,0.3061
+C,Nim,0.306
+Scala,VBA,0.306
+NATURAL,Scala,0.306
+Forth,PHP,0.3055
+Apex,F#,0.3055
+Dart,OpenCL,0.3054
+Clojure,Stata,0.3054
+Solidity,Swift,0.3053
+Clojure,Julia,0.3052
+APL,MATLAB,0.3051
+ABAP,VHDL,0.305
+D,Swift,0.3047
+D,"Fortran,",0.3044
+Prolog,SAS,0.3044
+ABAP,Scala,0.3043
+NATURAL,Rust,0.304
+Crystal,Scala,0.3038
+"COBOL,",Rust,0.3037
+Go,Scala,0.3036
+Dart,Haskell,0.3034
+C#,Elm,0.3034
+ABAP,Rust,0.3034
+"Delphi (Object Pascal,)",Verilog,0.3032
+"Delphi (Object Pascal,)",TypeScript,0.3031
+NATURAL,Zig,0.3031
+Clojure,SAS,0.303
+Go,PL/I,0.303
+Crystal,Rust,0.303
+Erlang,Ruby,0.3025
+C#,NATURAL,0.3019
+Julia,Ruby,0.3017
+"CommonLisp,",Lua,0.301
+D,Go,0.3009
+C++,MQL5,0.3008
+F#,Zig,0.3008
+F#,NATURAL,0.3004
+Bash / Shell Script,Forth,0.3004
+Lua,Wolfram Language,0.3002
+"COBOL,",Haxe,0.3001
+Kotlin,OpenCL,0.3
+"COBOL,",OpenCL,0.3
+"COBOL,",HiveQL (Apache Hive),0.2998
+ABAP,Haxe,0.2995
+OCaml,SystemVerilog,0.299
+C,Objective-C,0.2989
+Haxe,Scala,0.2989
+Java,NATURAL,0.2984
+Julia,Wolfram Language,0.2984
+Elm,Solidity,0.2982
+Haxe,Visual Basic .NET,0.2975
+Haxe,VBA,0.2975
+OpenCL,VBA,0.2973
+"COBOL,","Delphi (Object Pascal,)",0.2972
+OpenCL,Rust,0.2971
+OCaml,TypeScript,0.297
+C#,D,0.2969
+ABAP,"Delphi (Object Pascal,)",0.2968
+"COBOL,",Zig,0.2966
+"CommonLisp,",PowerShell,0.2964
+F#,"Transact-SQL, (T-SQL,)",0.2963
+ABAP,Zig,0.2963
+Groovy,MQL5,0.2962
+F#,MQL5,0.2961
+ABAP,HiveQL (Apache Hive),0.296
+Apex,"COBOL,",0.296
+F#,"SQL,",0.2957
+Racket,Ruby,0.2956
+"Delphi (Object Pascal,)",VBA,0.2955
+Rexx,SAS,0.2954
+"COBOL,","Fortran,",0.2953
+Lua,Scheme,0.2953
+MATLAB,Scheme,0.2953
+Apex,Crystal,0.2952
+MATLAB,Q (kdb+),0.2951
+Apex,Swift,0.2951
+F#,Solidity,0.2949
+Elixir,Wolfram Language,0.2949
+Python,Smalltalk (Pharo),0.2949
+Apex,Visual Basic .NET,0.2947
+MATLAB,PowerShell,0.2947
+Crystal,"Fortran,",0.2946
+Dart,Zig,0.2946
+PL/I,Scala,0.2946
+"Fortran,",Swift,0.2946
+PowerShell,Python,0.2946
+GDScript,Solidity,0.2945
+Scheme,Stata,0.2944
+Elixir,Julia,0.2942
+"Fortran,",VBA,0.2942
+"Fortran,",Visual Basic .NET,0.2942
+Julia,PowerShell,0.2941
+"Fortran,",Kotlin,0.294
+Ada 2022,Swift,0.294
+PL/I,Rust,0.294
+Ada 2022,Dart,0.2939
+GAMS,NATURAL,0.2938
+Rexx,Tcl,0.2935
+Scala,"SQL,",0.2934
+Haskell,Rust,0.2932
+Go,"PL/SQL,",0.293
+Haxe,"PL/SQL,",0.2927
+Apex,CUDA C/C++,0.2926
+C++,Smalltalk (Pharo),0.2925
+HiveQL (Apache Hive),SAS,0.2923
+PowerShell,Stata,0.2922
+Clojure,Ruby,0.292
+ABAP,TypeScript,0.2917
+RPG,VBA,0.2917
+OCaml,"Transact-SQL, (T-SQL,)",0.2917
+ABAP,RPG,0.2917
+"PL/SQL,",Visual Basic .NET,0.2917
+APL,Julia,0.2917
+RPG,Visual Basic .NET,0.2917
+OpenCL,Scala,0.2917
+"COBOL,","Transact-SQL, (T-SQL,)",0.2917
+ABAP,"PL/SQL,",0.2917
+TypeScript,Visual Basic .NET,0.2917
+OCaml,"PL/SQL,",0.2917
+OpenCL,PL/I,0.2917
+CUDA C/C++,SystemVerilog,0.2917
+"Transact-SQL, (T-SQL,)",Visual Basic .NET,0.2917
+TypeScript,VBA,0.2917
+Solidity,SystemVerilog,0.2917
+"COBOL,","PL/SQL,",0.2917
+SystemVerilog,X++,0.2917
+OCaml,RPG,0.2917
+"COBOL,",TypeScript,0.2917
+GAMS,"PL/pgSQL,",0.2917
+"SQL,",Stata,0.2913
+AWK,PHP,0.2911
+C#,"PL/pgSQL,",0.2908
+Haxe,Mojo,0.2904
+Ada 2022,Crystal,0.2904
+ABAP,F#,0.2903
+AWK,CFML (ColdFusion),0.2902
+Go,"Transact-SQL, (T-SQL,)",0.29
+Assembly (x86),C,0.2896
+"COBOL,",Java,0.2896
+"Delphi (Object Pascal,)",OpenCL,0.2895
+F#,Go,0.2895
+Julia,Stata,0.2894
+ABAP,Java,0.2893
+"PL/pgSQL,",SystemVerilog,0.2893
+Erlang,PowerShell,0.2892
+PHP,Rexx,0.2891
+MATLAB,Ruby,0.289
+Crystal,Java,0.2888
+Dart,PowerShell,0.2888
+F#,Haxe,0.2888
+Java,Swift,0.2888
+APL,Elixir,0.2887
+Java,OCaml,0.2884
+GAMS,Prolog,0.2883
+Groovy,SAS,0.288
+"Fortran,",GAMS,0.2879
+APL,Clojure,0.2878
+Apex,OpenCL,0.2877
+"CommonLisp,",Groovy,0.2876
+Lua,Q (kdb+),0.2876
+Clojure,Prolog,0.2876
+OCaml,Swift,0.2876
+Haxe,OpenCL,0.2875
+Mojo,X++,0.2874
+C++,Solidity,0.2873
+"PL/SQL,",SystemVerilog,0.2872
+Elixir,Lua,0.2868
+GraphQL,Visual Basic .NET,0.2864
+GraphQL,VBA,0.2864
+Elixir,Stata,0.2864
+CFML (ColdFusion),JavaScript,0.2863
+CUDA C/C++,VBA,0.2862
+"COBOL,",CUDA C/C++,0.2861
+Apex,PL/I,0.2859
+Haxe,NATURAL,0.2858
+MQL5,Swift,0.2857
+CFML (ColdFusion),Rexx,0.2857
+"Delphi (Object Pascal,)",Go,0.2855
+Go,MQL5,0.2855
+"Delphi (Object Pascal,)",Scala,0.2854
+Haskell,OCaml,0.2854
+Crystal,VHDL,0.2853
+MQL5,OCaml,0.2852
+NATURAL,"SQL,",0.2852
+MQL5,Visual Basic .NET,0.2851
+MQL5,VBA,0.2851
+Go,VHDL,0.2851
+APL,Lua,0.2849
+LabVIEW,NATURAL,0.2849
+Elixir,SAS,0.2848
+D,R,0.2848
+Mojo,Swift,0.2847
+D,Haskell,0.2847
+SystemVerilog,"Transact-SQL, (T-SQL,)",0.2846
+CUDA C/C++,OCaml,0.2846
+Crystal,Solidity,0.2846
+D,Ruby,0.2845
+Apex,"PL/pgSQL,",0.2845
+Go,Solidity,0.2844
+F#,PL/I,0.2844
+Apex,NATURAL,0.2843
+CUDA C/C++,Kotlin,0.2843
+Groovy,Wolfram Language,0.2843
+APL,SAS,0.2842
+Go,NATURAL,0.2842
+Solidity,VBA,0.2841
+OCaml,Solidity,0.2841
+Solidity,Visual Basic .NET,0.2841
+Ada 2022,Scala,0.2841
+APL,Python,0.284
+"Fortran,",Go,0.284
+"Fortran,",Scala,0.284
+Julia,Racket,0.284
+AWK,Rexx,0.2839
+VBA,Verilog,0.2839
+NATURAL,Visual Basic .NET,0.2839
+NATURAL,VBA,0.2839
+Verilog,Visual Basic .NET,0.2839
+Kotlin,NATURAL,0.2837
+Java,PL/I,0.2837
+Lua,Tcl,0.2837
