@@ -156,9 +156,13 @@ public class TesteGrafoNDPeso {
 		System.setOut(arquivo);
 
 		mostraVertices(vertices);
+		// para testar o remover
+		//grafo.removeAND(0, 1);
+		//grafo.removeVND(2);
 		grafo.showND();
 
 		arquivo.close();
+
 
 		// volta o System.out para a tela normalmente
 		System.setOut(telaOriginal);
