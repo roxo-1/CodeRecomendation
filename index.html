@@ -1,0 +1,873 @@
+javac -encoding UTF-8 Grafopasta/TGrafoNDPeso.java<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Code Recomendation — grafo de linguagens</title>
+<!--
+  Code Recomendation - Teoria dos Grafos (Mackenzie)
+  Integrantes:
+    Carolina Lee                       - RA 10440304 - 10440304@mackenzista.com.br
+    Pedro Casas Pequeno Junior         - RA 10437031 - 10437031@mackenzista.com.br
+    Pedro Gabriel Guimarães Fernandes  - RA 10437465 - 10437465@mackenzista.com.br
+
+  Síntese:
+    Página para o GitHub Pages que exibe o grafo não dirigido e ponderado das
+    linguagens de programação (peso = distância = 1 - similaridade) e permite
+    filtrar linguagens por características (paradigma, tipagem, influência,
+    texto) e por proximidade (Dijkstra a partir das linguagens que o usuário
+    conhece), traçar a trilha entre duas linguagens e ver a árvore geradora
+    mínima (Prim). Os dados vêm de dados_grafo.js, gerado pelo
+    similaridade_grafo.py — basta deixar os dois arquivos na mesma pasta.
+
+  Histórico de alterações:
+    05/11/2026 - Pedro Gabriel Guimarães Fernandes - primeira versão.
+-->
+<style>
+  :root {
+    --bg: #f6f5f1;
+    --panel: #ffffff;
+    --ink: #1d1d1b;
+    --muted: #6b6a64;
+    --line: #e3e1da;
+    --node: #8a93a6;
+    --edge: 120, 128, 145;
+    --known: #1f4fd1;
+    --rec: #0e8a5f;
+    --path: #e0662b;
+    --chip: #efeee9;
+    --chip-on: #1d1d1b;
+    --chip-on-ink: #ffffff;
+    --shadow: 0 1px 2px rgba(0,0,0,.05), 0 4px 16px rgba(0,0,0,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141415;
+      --panel: #1d1d1f;
+      --ink: #ecebe6;
+      --muted: #9a9993;
+      --line: #2e2e31;
+      --node: #7b8496;
+      --edge: 150, 158, 175;
+      --known: #6f93ff;
+      --rec: #3ccf97;
+      --path: #ff8a50;
+      --chip: #2a2a2d;
+      --chip-on: #ecebe6;
+      --chip-on-ink: #141415;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.3);
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font: 14px/1.45 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    display: grid; grid-template-rows: auto 1fr; overflow: hidden;
+  }
+  header {
+    display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap;
+    padding: 14px 20px; border-bottom: 1px solid var(--line);
+  }
+  header h1 { font-size: 18px; margin: 0; letter-spacing: -.01em; }
+  header .stats { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+  header a { color: inherit; }
+  main { display: grid; grid-template-columns: 340px 1fr 340px; min-height: 0; }
+  aside { overflow-y: auto; padding: 16px; border-right: 1px solid var(--line); }
+  aside.right { border-right: 0; border-left: 1px solid var(--line); }
+  section { margin-bottom: 22px; }
+  h2 {
+    font-size: 11px; text-transform: uppercase; letter-spacing: .08em;
+    color: var(--muted); margin: 0 0 10px; font-weight: 600;
+  }
+  h3 { font-size: 13px; margin: 14px 0 6px; font-weight: 600; }
+  label.small { font-size: 12px; color: var(--muted); display: block; margin: 10px 0 4px; }
+  input[type=text], input[type=search], select, input[type=number] {
+    width: 100%; padding: 7px 9px; border: 1px solid var(--line); border-radius: 7px;
+    background: var(--panel); color: var(--ink); font: inherit;
+  }
+  input[type=range] { width: 100%; accent-color: var(--ink); }
+  button {
+    font: inherit; border: 1px solid var(--line); background: var(--panel); color: var(--ink);
+    padding: 6px 10px; border-radius: 7px; cursor: pointer;
+  }
+  button:hover { border-color: var(--muted); }
+  button.primary { background: var(--chip-on); color: var(--chip-on-ink); border-color: var(--chip-on); }
+  .row { display: flex; gap: 8px; align-items: center; }
+  .row > * { flex: 1; }
+  .chips { display: flex; flex-wrap: wrap; gap: 5px; }
+  .chip {
+    font-size: 12px; padding: 3px 9px; border-radius: 999px; background: var(--chip);
+    border: 1px solid transparent; cursor: pointer; user-select: none; white-space: nowrap;
+  }
+  .chip.on { background: var(--chip-on); color: var(--chip-on-ink); }
+  .chip .n { opacity: .55; margin-left: 4px; font-variant-numeric: tabular-nums; }
+  .chip.known { background: var(--known); color: #fff; }
+  .chip.known::after { content: " ×"; opacity: .8; }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 7px; overflow: hidden; }
+  .seg button { border: 0; border-radius: 0; padding: 4px 9px; font-size: 12px; }
+  .seg button.on { background: var(--chip-on); color: var(--chip-on-ink); }
+  .hint { color: var(--muted); font-size: 12px; margin: 6px 0 0; }
+  .canvas-wrap { position: relative; min-width: 0; min-height: 0; }
+  canvas { display: block; width: 100%; height: 100%; cursor: grab; }
+  canvas.dragging { cursor: grabbing; }
+  .legend {
+    position: absolute; left: 12px; bottom: 12px; background: var(--panel); border: 1px solid var(--line);
+    border-radius: 9px; padding: 8px 10px; font-size: 12px; box-shadow: var(--shadow);
+    display: flex; gap: 12px; flex-wrap: wrap; max-width: calc(100% - 24px);
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .tools { position: absolute; right: 12px; top: 12px; display: flex; gap: 6px; }
+  .tools button { box-shadow: var(--shadow); }
+  .tooltip {
+    position: absolute; pointer-events: none; background: var(--panel); border: 1px solid var(--line);
+    padding: 6px 9px; border-radius: 7px; font-size: 12px; box-shadow: var(--shadow); display: none;
+    max-width: 260px;
+  }
+  ol.results { list-style: none; padding: 0; margin: 0; counter-reset: r; }
+  ol.results li {
+    display: grid; grid-template-columns: 22px 1fr auto; gap: 6px; align-items: baseline;
+    padding: 7px 6px; border-radius: 7px; cursor: pointer; counter-increment: r;
+  }
+  ol.results li:hover { background: var(--chip); }
+  ol.results li::before { content: counter(r); color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+  ol.results .nome { font-weight: 600; }
+  ol.results .sub { grid-column: 2 / 4; color: var(--muted); font-size: 12px; }
+  ol.results .val { font-variant-numeric: tabular-nums; font-size: 12px; color: var(--muted); }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+  .card h3 { margin-top: 0; font-size: 16px; }
+  .card dl { margin: 0; display: grid; grid-template-columns: 92px 1fr; gap: 6px 10px; font-size: 13px; }
+  .card dt { color: var(--muted); }
+  .card dd { margin: 0; }
+  .card .actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+  .path { font-size: 13px; }
+  .path .step { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px dashed var(--line); }
+  .path .total { font-weight: 600; padding-top: 6px; display: flex; justify-content: space-between; }
+  .empty { color: var(--muted); font-size: 13px; }
+  .ok { color: var(--rec); } .warn { color: var(--path); }
+  @media (max-width: 1100px) {
+    body { overflow: auto; grid-template-rows: auto auto; }
+    main { grid-template-columns: 1fr; }
+    aside { border: 0; border-bottom: 1px solid var(--line); }
+    .canvas-wrap { height: 70vh; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Code Recomendation</h1>
+  <span class="stats" id="stats"></span>
+  <span class="stats">peso da aresta = distância = 1 − similaridade · <a href="#" id="sobreLink">como funciona</a></span>
+</header>
+
+<main>
+  <!-- ===================== Filtros ===================== -->
+  <aside>
+    <section>
+      <h2>Linguagens que eu conheço</h2>
+      <input type="search" id="conhecoInput" list="listaNomes" placeholder="Digite e tecle Enter (ex.: Java)">
+      <datalist id="listaNomes"></datalist>
+      <div class="chips" id="conhecoChips" style="margin-top:8px"></div>
+      <p class="hint">As recomendações são as linguagens com menor distância (Dijkstra) até qualquer uma das que você conhece.</p>
+      <label class="small">Quantas recomendações: <b id="kVal"></b></label>
+      <input type="range" id="kRange" min="1" max="30" value="8">
+      <label class="small">Distância máxima no grafo: <b id="dmaxVal"></b></label>
+      <input type="range" id="dmaxRange" min="0.3" max="3" step="0.05" value="3">
+    </section>
+
+    <section>
+      <h2>Filtrar por características</h2>
+      <input type="search" id="texto" placeholder="Buscar em nome, aplicação, sintaxe, semântica…">
+
+      <h3>Paradigmas
+        <span class="seg" id="modoParadigma" style="float:right">
+          <button data-v="any" class="on" title="tem pelo menos um dos marcados">qualquer</button>
+          <button data-v="all" title="tem todos os marcados">todos</button>
+        </span>
+      </h3>
+      <div class="chips" id="fParadigmas"></div>
+
+      <h3>Tipagem forte ou fraca</h3>
+      <div class="chips" id="fForte"></div>
+
+      <h3>Tipagem dinâmica ou estática</h3>
+      <div class="chips" id="fDin"></div>
+
+      <h3>Influenciada por</h3>
+      <div class="chips" id="fInfluencia"></div>
+
+      <div class="row" style="margin-top:12px">
+        <button id="limpar">Limpar filtros</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Trilha entre duas linguagens</h2>
+      <label class="small">De</label>
+      <select id="trilhaDe"></select>
+      <label class="small">Até</label>
+      <select id="trilhaAte"></select>
+      <div class="row" style="margin-top:8px">
+        <button class="primary" id="trilhaBtn">Traçar trilha</button>
+        <button id="trilhaLimpa">Limpar</button>
+      </div>
+      <div id="trilhaRes" class="path" style="margin-top:10px"></div>
+    </section>
+
+    <section>
+      <h2>Grafo</h2>
+      <label class="small">Nota de corte (similaridade mínima): <b id="corteVal"></b></label>
+      <input type="range" id="corteRange" min="0.2" max="0.62" step="0.0005">
+      <p class="hint" id="corteInfo"></p>
+      <div class="row" style="margin-top:6px">
+        <button id="corteReset">Voltar ao corte do Python</button>
+      </div>
+      <label class="small" style="margin-top:14px">
+        <input type="checkbox" id="mostrarPrim"> mostrar só a árvore geradora mínima (Prim)
+      </label>
+      <label class="small">
+        <input type="checkbox" id="mostrarNomes"> mostrar todos os nomes
+      </label>
+    </section>
+  </aside>
+
+  <!-- ===================== Grafo ===================== -->
+  <div class="canvas-wrap" id="wrap">
+    <canvas id="cv"></canvas>
+    <div class="tools">
+      <button id="ajustar" title="Enquadrar o grafo">Enquadrar</button>
+      <button id="reorganizar" title="Refazer o layout">Reorganizar</button>
+    </div>
+    <div class="legend">
+      <span><i class="dot" style="background:var(--known)"></i>conheço</span>
+      <span><i class="dot" style="background:var(--rec)"></i>recomendada</span>
+      <span><i class="dot" style="background:var(--path)"></i>trilha</span>
+      <span><i class="dot" style="background:var(--node)"></i>atende aos filtros</span>
+      <span><i class="dot" style="background:var(--node);opacity:.25"></i>fora dos filtros</span>
+    </div>
+    <div class="tooltip" id="tip"></div>
+  </div>
+
+  <!-- ===================== Resultados ===================== -->
+  <aside class="right">
+    <section>
+      <h2 id="resTitulo">Resultados</h2>
+      <p class="hint" id="resInfo" style="margin:-4px 0 10px"></p>
+      <ol class="results" id="resultados"></ol>
+    </section>
+    <section>
+      <h2>Detalhes</h2>
+      <div id="detalhe" class="empty">Clique numa linguagem no grafo ou na lista.</div>
+    </section>
+  </aside>
+</main>
+
+<script src="dados_grafo.js"></script>
+<script>
+"use strict";
+if (typeof DADOS_GRAFO === "undefined") {
+  document.body.innerHTML = "<p style='padding:24px'>Não encontrei <b>dados_grafo.js</b>. Rode o <code>similaridade_grafo.py</code> e deixe o arquivo gerado na mesma pasta do index.html.</p>";
+  throw new Error("dados_grafo.js ausente");
+}
+
+// =====================================================================
+// Dados
+// =====================================================================
+const L = DADOS_GRAFO.linguagens;
+const N = L.length;
+const SIM = DADOS_GRAFO.similaridade;
+const CORTE_PY = DADOS_GRAFO.corte;
+const $ = id => document.getElementById(id);
+const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+const fmt = (x, c = 4) => x.toFixed(c);
+// os termos vêm normalizados (sem acento) do Python; aqui só para exibir
+const ROTULO = { estatico: "estático", dinamico: "dinâmico", reflexao: "reflexão", generico: "genérico",
+  metaprogramacao: "metaprogramação", logico: "lógico", prototipos: "protótipos", "nao estruturado": "não estruturado",
+  matematica: "matemática" };
+const rot = t => ROTULO[t] || t;
+const rots = a => a.map(rot).join(", ");
+
+const textoBusca = L.map(l => norm([l.nome, l.aplicacao, l.sintatica, l.semantica, l.paradigmas.join(" "), l.influencias.join(" ")].join(" ")));
+
+// =====================================================================
+// Grafo (mesma lógica do TGrafoNDPeso): lista de adjacência com distâncias
+// =====================================================================
+let corte = CORTE_PY;
+let adj = [];     // adj[v] = [{w, p}]
+let arestas = []; // {a, b, p}
+let grau = [];
+
+function construir() {
+  adj = Array.from({ length: N }, () => []);
+  arestas = [];
+  for (let i = 0; i < N; i++)
+    for (let j = i + 1; j < N; j++)
+      if (SIM[i][j] >= corte - 1e-9) {
+        const p = Math.round((1 - SIM[i][j]) * 1e4) / 1e4;
+        adj[i].push({ w: j, p }); adj[j].push({ w: i, p });
+        arestas.push({ a: i, b: j, p });
+      }
+  adj.forEach(l => l.sort((x, y) => x.p - y.p));
+  grau = adj.map(l => l.length);
+  primArestas = prim();
+}
+
+// Busca em profundidade (iterativa) -> componentes
+function componentes() {
+  const comp = new Array(N).fill(-1);
+  let c = 0;
+  for (let s = 0; s < N; s++) {
+    if (comp[s] !== -1) continue;
+    const pilha = [s]; comp[s] = c;
+    while (pilha.length) {
+      const v = pilha.pop();
+      for (const { w } of adj[v]) if (comp[w] === -1) { comp[w] = c; pilha.push(w); }
+    }
+    c++;
+  }
+  return c;
+}
+
+// Dijkstra com várias origens (d = 0 em todas as linguagens conhecidas)
+function dijkstra(origens) {
+  const dist = new Array(N).fill(Infinity), ant = new Array(N).fill(-1), fechado = new Array(N).fill(false);
+  origens.forEach(o => dist[o] = 0);
+  for (let passo = 0; passo < N; passo++) {
+    let r = -1;
+    for (let i = 0; i < N; i++) if (!fechado[i] && (r === -1 || dist[i] < dist[r])) r = i;
+    if (r === -1 || dist[r] === Infinity) break;
+    fechado[r] = true;
+    for (const { w, p } of adj[r])
+      if (!fechado[w] && dist[r] + p < dist[w]) { dist[w] = dist[r] + p; ant[w] = r; }
+  }
+  return { dist, ant };
+}
+function caminho(ant, destino) {
+  const c = [];
+  for (let v = destino; v !== -1; v = ant[v]) c.unshift(v);
+  return c;
+}
+
+// Prim (árvore geradora mínima; floresta se o grafo for desconexo)
+let primArestas = new Set();
+function prim() {
+  const emT = new Array(N).fill(false), chave = new Array(N).fill(Infinity), pai = new Array(N).fill(-1);
+  const res = new Set();
+  for (let raiz = 0; raiz < N; raiz++) {
+    if (emT[raiz]) continue;
+    chave[raiz] = 0;
+    while (true) {
+      let v = -1;
+      for (let i = 0; i < N; i++) if (!emT[i] && chave[i] < Infinity && (v === -1 || chave[i] < chave[v])) v = i;
+      if (v === -1) break;
+      emT[v] = true;
+      if (pai[v] !== -1) res.add(chaveAresta(v, pai[v]));
+      for (const { w, p } of adj[v]) if (!emT[w] && p < chave[w]) { chave[w] = p; pai[w] = v; }
+    }
+  }
+  return res;
+}
+const chaveAresta = (a, b) => a < b ? a + "-" + b : b + "-" + a;
+
+// =====================================================================
+// Estado da interface
+// =====================================================================
+const estado = {
+  conhecidas: [],
+  paradigmas: new Set(), modoParadigma: "any",
+  forte: new Set(), din: new Set(), influencia: new Set(),
+  texto: "",
+  k: 8, dmax: 3,
+  trilha: null,       // {caminho, dist}
+  trilhaPedida: false, // usuário pediu uma trilha (refeita quando o corte muda)
+  selecionada: -1,
+};
+let recomendadas = [];   // [{v, d, caminho}]
+let atende = new Array(N).fill(true);
+let destaqueArestas = new Set(); // arestas dos caminhos das recomendações
+let trilhaArestas = new Set();
+
+function atendeFiltros(i) {
+  const l = L[i];
+  if (estado.texto && !textoBusca[i].includes(norm(estado.texto))) return false;
+  if (estado.paradigmas.size) {
+    const tem = [...estado.paradigmas].map(p => l.paradigmas.includes(p));
+    if (estado.modoParadigma === "any" ? !tem.some(Boolean) : !tem.every(Boolean)) return false;
+  }
+  if (estado.forte.size && !l.forteFraco.some(x => estado.forte.has(x))) return false;
+  if (estado.din.size && !l.dinEst.some(x => estado.din.has(x))) return false;
+  if (estado.influencia.size && !l.influencias.some(x => estado.influencia.has(x.toLowerCase()))) return false;
+  return true;
+}
+
+function filtrosAtivos() {
+  return !!(estado.texto || estado.paradigmas.size || estado.forte.size || estado.din.size || estado.influencia.size);
+}
+
+function atualizar() {
+  for (let i = 0; i < N; i++) atende[i] = atendeFiltros(i);
+  recomendadas = [];
+  destaqueArestas = new Set();
+
+  if (estado.conhecidas.length) {
+    const { dist, ant } = dijkstra(estado.conhecidas);
+    const conh = new Set(estado.conhecidas);
+    const cand = [];
+    for (let v = 0; v < N; v++)
+      if (!conh.has(v) && atende[v] && dist[v] <= estado.dmax) cand.push({ v, d: dist[v] });
+    cand.sort((a, b) => a.d - b.d);
+    recomendadas = cand.slice(0, estado.k).map(c => ({ ...c, caminho: caminho(ant, c.v) }));
+    recomendadas.forEach(r => { for (let i = 1; i < r.caminho.length; i++) destaqueArestas.add(chaveAresta(r.caminho[i - 1], r.caminho[i])); });
+  }
+  renderResultados();
+  renderChipsConhecidas();
+  renderStats();
+  desenhar();
+}
+
+// =====================================================================
+// Painéis
+// =====================================================================
+function renderStats() {
+  const c = componentes();
+  $("stats").textContent = `${N} linguagens · ${arestas.length} arestas · ${c === 1 ? "conexo" : c + " componentes"}`;
+  $("corteVal").textContent = fmt(corte);
+  $("corteInfo").innerHTML = `${arestas.length} arestas (distância ≤ ${fmt(1 - corte)}). ` +
+    (c === 1 ? `<span class="ok">Grafo conexo.</span>` : `<span class="warn">Desconexo: ${c} componentes — algumas linguagens ficam sem caminho.</span>`);
+}
+
+function liResultado(v, valor, sub) {
+  const li = document.createElement("li");
+  const a = document.createElement("span"); a.className = "nome"; a.textContent = L[v].nome;
+  const b = document.createElement("span"); b.className = "val"; b.textContent = valor;
+  li.append(a, b);
+  if (sub) { const s = document.createElement("span"); s.className = "sub"; s.textContent = sub; li.append(s); }
+  li.onclick = () => selecionar(v, true);
+  return li;
+}
+
+function renderResultados() {
+  const ol = $("resultados"); ol.innerHTML = "";
+  if (estado.conhecidas.length) {
+    $("resTitulo").textContent = "Recomendações";
+    $("resInfo").textContent = filtrosAtivos()
+      ? "Mais próximas das que você conhece, entre as que atendem aos filtros."
+      : "Mais próximas das que você conhece (menor distância no grafo).";
+    if (!recomendadas.length) { ol.innerHTML = `<li class="empty" style="display:block">Nada encontrado com esses filtros e distância.</li>`; return; }
+    for (const r of recomendadas) {
+      const via = r.caminho.map(v => L[v].nome).join(" → ");
+      ol.append(liResultado(r.v, "dist " + fmt(r.d, 3), via));
+    }
+    return;
+  }
+  // sem linguagens conhecidas: lista quem atende aos filtros, por grau
+  const lista = [];
+  for (let v = 0; v < N; v++) if (atende[v]) lista.push(v);
+  lista.sort((a, b) => grau[b] - grau[a] || L[a].nome.localeCompare(L[b].nome));
+  if (filtrosAtivos()) {
+    $("resTitulo").textContent = `${lista.length} linguagens atendem aos filtros`;
+    $("resInfo").textContent = "Ordenadas por grau. Adicione linguagens que você conhece para ordenar por proximidade.";
+  } else {
+    $("resTitulo").textContent = "Sugestão para iniciantes";
+    $("resInfo").textContent = "Linguagens de maior grau: parecidas com muitas outras, abrem mais caminhos.";
+  }
+  lista.slice(0, filtrosAtivos() ? 200 : 10).forEach(v => {
+    const sub = [rots(L[v].paradigmas.slice(0, 3)), L[v].dinEst.map(rot).join("/")].filter(Boolean).join(" · ");
+    ol.append(liResultado(v, "grau " + grau[v], sub));
+  });
+}
+
+function renderChipsConhecidas() {
+  const box = $("conhecoChips"); box.innerHTML = "";
+  estado.conhecidas.forEach(v => {
+    const c = document.createElement("span"); c.className = "chip known"; c.textContent = L[v].nome;
+    c.title = "remover";
+    c.onclick = () => { estado.conhecidas = estado.conhecidas.filter(x => x !== v); atualizar(); };
+    box.append(c);
+  });
+}
+
+function addDD(dl, rotulo, valor) {
+  const dt = document.createElement("dt"); dt.textContent = rotulo;
+  const dd = document.createElement("dd");
+  if (valor instanceof Node) dd.append(valor); else dd.textContent = valor || "—";
+  dl.append(dt, dd);
+}
+
+function selecionar(v, centralizar) {
+  estado.selecionada = v;
+  const l = L[v];
+  const box = $("detalhe"); box.className = "card"; box.innerHTML = "";
+  const h = document.createElement("h3"); h.textContent = l.nome; box.append(h);
+  const dl = document.createElement("dl");
+  addDD(dl, "Paradigmas", rots(l.paradigmas));
+  addDD(dl, "Tipagem", rots([...l.forteFraco, ...l.dinEst]));
+  addDD(dl, "Influências", l.influencias.join(", "));
+  addDD(dl, "Aplicação", l.aplicacao);
+  addDD(dl, "Sintaxe", l.sintatica);
+  addDD(dl, "Semântica", l.semantica);
+  addDD(dl, "Grau", String(grau[v]));
+  const viz = document.createElement("div"); viz.className = "chips";
+  adj[v].slice(0, 6).forEach(({ w, p }) => {
+    const c = document.createElement("span"); c.className = "chip"; c.textContent = L[w].nome;
+    const n = document.createElement("span"); n.className = "n"; n.textContent = fmt(p, 3); c.append(n);
+    c.onclick = () => selecionar(w, true);
+    viz.append(c);
+  });
+  addDD(dl, "Mais próximas", adj[v].length ? viz : "sem arestas com este corte");
+  if (l.doc && /^https?:\/\//.test(l.doc)) {
+    const a = document.createElement("a"); a.href = l.doc; a.target = "_blank"; a.rel = "noopener"; a.textContent = "abrir documentação";
+    a.style.color = "inherit";
+    addDD(dl, "Docs", a);
+  }
+  box.append(dl);
+
+  const act = document.createElement("div"); act.className = "actions";
+  const b1 = document.createElement("button");
+  const conhece = estado.conhecidas.includes(v);
+  b1.textContent = conhece ? "Remover das que conheço" : "Eu conheço esta";
+  b1.className = conhece ? "" : "primary";
+  b1.onclick = () => {
+    estado.conhecidas = conhece ? estado.conhecidas.filter(x => x !== v) : [...estado.conhecidas, v];
+    atualizar(); selecionar(v);
+  };
+  act.append(b1);
+  if (estado.conhecidas.length && !conhece) {
+    const b2 = document.createElement("button"); b2.textContent = "Trilha até aqui";
+    b2.onclick = () => {
+      // parte da linguagem conhecida mais próxima
+      const { dist, ant } = dijkstra(estado.conhecidas);
+      const c = caminho(ant, v);
+      $("trilhaDe").value = c[0]; $("trilhaAte").value = v;
+      estado.trilhaPedida = true;
+      tracarTrilha();
+    };
+    act.append(b2);
+  }
+  box.append(act);
+  if (centralizar) centralizarEm(v);
+  desenhar();
+}
+
+// =====================================================================
+// Filtros (chips)
+// =====================================================================
+function contar(campo, minusculo) {
+  const m = new Map();
+  L.forEach(l => new Set(l[campo].map(x => minusculo ? x.toLowerCase() : x)).forEach(x => m.set(x, (m.get(x) || 0) + 1)));
+  return [...m.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+}
+function montarChips(id, campo, conjunto, minimo = 1, minusculo = false, limite = Infinity) {
+  const box = $(id); box.innerHTML = "";
+  const itens = contar(campo, minusculo).filter(([, n]) => n >= minimo);
+  const mostrar = (todos) => {
+    box.innerHTML = "";
+    (todos ? itens : itens.slice(0, limite)).forEach(([v, n]) => {
+      const c = document.createElement("span"); c.className = "chip" + (conjunto.has(v) ? " on" : "");
+      c.textContent = rot(v);
+      const s = document.createElement("span"); s.className = "n"; s.textContent = n; c.append(s);
+      c.onclick = () => { conjunto.has(v) ? conjunto.delete(v) : conjunto.add(v); c.classList.toggle("on"); atualizar(); };
+      box.append(c);
+    });
+    if (itens.length > limite) {
+      const mais = document.createElement("span"); mais.className = "chip"; mais.style.background = "transparent";
+      mais.style.textDecoration = "underline";
+      mais.textContent = todos ? "mostrar menos" : `+${itens.length - limite} mais`;
+      mais.onclick = () => mostrar(!todos);
+      box.append(mais);
+    }
+  };
+  mostrar(false);
+}
+function montarFiltros() {
+  montarChips("fParadigmas", "paradigmas", estado.paradigmas, 1, false, 14);
+  montarChips("fForte", "forteFraco", estado.forte);
+  montarChips("fDin", "dinEst", estado.din);
+  montarChips("fInfluencia", "influencias", estado.influencia, 2, true, 16);
+}
+
+// =====================================================================
+// Trilha
+// =====================================================================
+function tracarTrilha() {
+  const a = +$("trilhaDe").value, b = +$("trilhaAte").value;
+  const box = $("trilhaRes"); box.innerHTML = "";
+  trilhaArestas = new Set();
+  if (a === b) { box.innerHTML = `<p class="empty">Escolha duas linguagens diferentes.</p>`; estado.trilha = null; desenhar(); return; }
+  const { dist, ant } = dijkstra([a]);
+  if (dist[b] === Infinity) { box.innerHTML = `<p class="warn">Não existe caminho com este corte.</p>`; estado.trilha = null; desenhar(); return; }
+  const c = caminho(ant, b);
+  estado.trilha = { caminho: c, dist: dist[b] };
+  for (let i = 1; i < c.length; i++) trilhaArestas.add(chaveAresta(c[i - 1], c[i]));
+  c.forEach((v, i) => {
+    const d = document.createElement("div"); d.className = "step";
+    const n = document.createElement("span"); n.textContent = (i ? "→ " : "") + L[v].nome;
+    const p = document.createElement("span"); p.className = "val";
+    p.textContent = i ? "+" + fmt(SIM_DIST(c[i - 1], v), 3) : "";
+    d.append(n, p); box.append(d);
+  });
+  const t = document.createElement("div"); t.className = "total";
+  t.innerHTML = `<span>Distância total (${c.length - 1} passos)</span><span>${fmt(dist[b], 3)}</span>`;
+  box.append(t);
+  desenhar();
+}
+const SIM_DIST = (a, b) => Math.round((1 - SIM[a][b]) * 1e4) / 1e4;
+
+// =====================================================================
+// Layout por forças + desenho no canvas
+// =====================================================================
+const cv = $("cv"), ctx = cv.getContext("2d"), wrap = $("wrap"), tip = $("tip");
+let W = 0, H = 0, DPR = 1;
+const pos = Array.from({ length: N }, () => ({ x: 0, y: 0, vx: 0, vy: 0, fixo: false }));
+let cam = { x: 0, y: 0, z: 1 };
+let hover = -1;
+
+function rnd(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+
+function layoutInicial() {
+  const r = rnd(42);
+  pos.forEach((p, i) => { const a = 2 * Math.PI * i / N; p.x = Math.cos(a) * 300 + r() * 20; p.y = Math.sin(a) * 300 + r() * 20; p.vx = p.vy = 0; p.fixo = false; });
+}
+
+function simular(iter) {
+  const pmin = 0.35, pmax = 0.75;
+  for (let t = 0; t < iter; t++) {
+    const temp = 1 - t / iter;
+    // repulsão entre todos os pares
+    for (let i = 0; i < N; i++) for (let j = i + 1; j < N; j++) {
+      let dx = pos[i].x - pos[j].x, dy = pos[i].y - pos[j].y;
+      let d2 = dx * dx + dy * dy + 0.01;
+      const f = 2600 / d2, d = Math.sqrt(d2);
+      dx /= d; dy /= d;
+      pos[i].vx += dx * f; pos[i].vy += dy * f; pos[j].vx -= dx * f; pos[j].vy -= dy * f;
+    }
+    // molas nas arestas: quanto menor a distância, mais curta a mola
+    const lista = document.getElementById("mostrarPrim").checked ? arestas.filter(e => primArestas.has(chaveAresta(e.a, e.b))) : arestas;
+    for (const e of lista) {
+      const A = pos[e.a], B = pos[e.b];
+      const alvo = 40 + 220 * (e.p - pmin) / (pmax - pmin);
+      let dx = B.x - A.x, dy = B.y - A.y; const d = Math.sqrt(dx * dx + dy * dy) || 0.01;
+      const f = (d - alvo) * 0.02;
+      dx /= d; dy /= d;
+      A.vx += dx * f; A.vy += dy * f; B.vx -= dx * f; B.vy -= dy * f;
+    }
+    for (const p of pos) {
+      p.vx -= p.x * 0.004; p.vy -= p.y * 0.004; // gravidade para o centro
+      if (!p.fixo) { p.x += Math.max(-30, Math.min(30, p.vx)) * (0.2 + temp); p.y += Math.max(-30, Math.min(30, p.vy)) * (0.2 + temp); }
+      p.vx *= 0.5; p.vy *= 0.5;
+    }
+  }
+}
+
+function redimensionar() {
+  const r = wrap.getBoundingClientRect();
+  DPR = window.devicePixelRatio || 1; W = r.width; H = r.height;
+  cv.width = W * DPR; cv.height = H * DPR;
+  desenhar();
+}
+function enquadrar() {
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  pos.forEach(p => { x0 = Math.min(x0, p.x); y0 = Math.min(y0, p.y); x1 = Math.max(x1, p.x); y1 = Math.max(y1, p.y); });
+  const z = Math.min((W - 80) / (x1 - x0 || 1), (H - 80) / (y1 - y0 || 1));
+  cam.z = Math.max(0.2, Math.min(3, z)); cam.x = (x0 + x1) / 2; cam.y = (y0 + y1) / 2;
+  desenhar();
+}
+function centralizarEm(v) { cam.x = pos[v].x; cam.y = pos[v].y; if (cam.z < 1) cam.z = 1.2; }
+const tela = p => ({ x: (p.x - cam.x) * cam.z + W / 2, y: (p.y - cam.y) * cam.z + H / 2 });
+const mundo = (x, y) => ({ x: (x - W / 2) / cam.z + cam.x, y: (y - H / 2) / cam.z + cam.y });
+const raio = v => 4 + Math.sqrt(grau[v]) * 1.5;
+const cor = nome => getComputedStyle(document.documentElement).getPropertyValue(nome).trim();
+
+function desenhar() {
+  if (!W) return;
+  const C = { node: cor("--node"), known: cor("--known"), rec: cor("--rec"), path: cor("--path"), ink: cor("--ink"), edge: cor("--edge"), panel: cor("--panel") };
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+  const conh = new Set(estado.conhecidas);
+  const rec = new Map(recomendadas.map((r, i) => [r.v, i + 1]));
+  const naTrilha = new Set(estado.trilha ? estado.trilha.caminho : []);
+  const soPrim = $("mostrarPrim").checked;
+  const temFoco = conh.size || naTrilha.size;
+
+  // arestas
+  for (const e of arestas) {
+    const k = chaveAresta(e.a, e.b);
+    if (soPrim && !primArestas.has(k) && !trilhaArestas.has(k) && !destaqueArestas.has(k)) continue;
+    const A = tela(pos[e.a]), B = tela(pos[e.b]);
+    let alpha = 0.05 + 0.5 * Math.max(0, (0.72 - e.p) / 0.35);
+    if (!atende[e.a] || !atende[e.b]) alpha *= 0.25;
+    if (temFoco) alpha *= 0.45;
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = `rgba(${C.edge},${alpha})`;
+    if (trilhaArestas.has(k)) { ctx.strokeStyle = C.path; ctx.lineWidth = 3.5; }
+    else if (destaqueArestas.has(k)) { ctx.strokeStyle = C.rec; ctx.lineWidth = 2.2; }
+    else if (estado.selecionada !== -1 && (e.a === estado.selecionada || e.b === estado.selecionada)) { ctx.strokeStyle = C.ink; ctx.lineWidth = 1.2; ctx.globalAlpha = 0.6; }
+    ctx.beginPath(); ctx.moveTo(A.x, A.y); ctx.lineTo(B.x, B.y); ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+
+  // vértices
+  const rotulos = [];
+  for (let v = 0; v < N; v++) {
+    const P = tela(pos[v]); const r = raio(v) * Math.min(1.6, Math.max(0.7, cam.z));
+    let fill = C.node, alpha = atende[v] ? 1 : 0.22;
+    if (temFoco && atende[v] && !conh.has(v) && !rec.has(v) && !naTrilha.has(v)) alpha = 0.55;
+    if (conh.has(v) || naTrilha.has(v)) alpha = 1; // sempre visíveis, mesmo fora dos filtros
+    if (rec.has(v)) fill = C.rec;
+    if (naTrilha.has(v)) fill = C.path;
+    if (conh.has(v)) fill = C.known;
+    ctx.globalAlpha = alpha;
+    ctx.beginPath(); ctx.arc(P.x, P.y, r, 0, Math.PI * 2); ctx.fillStyle = fill; ctx.fill();
+    if (v === estado.selecionada || v === hover) { ctx.lineWidth = 2.5; ctx.strokeStyle = C.ink; ctx.stroke(); }
+    ctx.globalAlpha = 1;
+    const importante = conh.has(v) || rec.has(v) || naTrilha.has(v) || v === hover || v === estado.selecionada;
+    if (importante || $("mostrarNomes").checked || (cam.z > 1.5 && atende[v]))
+      rotulos.push({ v, P, r, importante, alpha, txt: (rec.has(v) ? rec.get(v) + ". " : "") + L[v].nome });
+  }
+  // nomes (por cima de tudo)
+  ctx.textBaseline = "middle";
+  for (const R of rotulos) {
+    ctx.font = (R.importante ? "600 12px " : "11px ") + "ui-sans-serif, system-ui, sans-serif";
+    ctx.globalAlpha = R.importante ? 1 : Math.max(0.35, R.alpha * 0.8);
+    ctx.lineWidth = 3.5; ctx.strokeStyle = C.panel; ctx.strokeText(R.txt, R.P.x + R.r + 4, R.P.y);
+    ctx.fillStyle = C.ink; ctx.fillText(R.txt, R.P.x + R.r + 4, R.P.y);
+  }
+  ctx.globalAlpha = 1;
+}
+
+function verticeEm(x, y) {
+  let melhor = -1, md = Infinity;
+  for (let v = 0; v < N; v++) {
+    const P = tela(pos[v]); const d = Math.hypot(P.x - x, P.y - y);
+    const r = raio(v) * Math.min(1.6, Math.max(0.7, cam.z)) + 4;
+    if (d < r && d < md) { md = d; melhor = v; }
+  }
+  return melhor;
+}
+
+// interação: arrastar fundo = mover; arrastar vértice = reposicionar; roda = zoom
+let arrasto = null;
+cv.addEventListener("pointerdown", ev => {
+  const r = cv.getBoundingClientRect(), x = ev.clientX - r.left, y = ev.clientY - r.top;
+  const v = verticeEm(x, y);
+  arrasto = { v, x, y, cx: cam.x, cy: cam.y, moveu: false };
+  cv.setPointerCapture(ev.pointerId); cv.classList.add("dragging");
+});
+cv.addEventListener("pointermove", ev => {
+  const r = cv.getBoundingClientRect(), x = ev.clientX - r.left, y = ev.clientY - r.top;
+  if (arrasto) {
+    if (Math.hypot(x - arrasto.x, y - arrasto.y) > 3) arrasto.moveu = true;
+    if (arrasto.v !== -1) { const m = mundo(x, y); pos[arrasto.v].x = m.x; pos[arrasto.v].y = m.y; pos[arrasto.v].fixo = true; }
+    else { cam.x = arrasto.cx - (x - arrasto.x) / cam.z; cam.y = arrasto.cy - (y - arrasto.y) / cam.z; }
+    desenhar(); return;
+  }
+  const v = verticeEm(x, y);
+  if (v !== hover) { hover = v; desenhar(); }
+  if (v !== -1) {
+    tip.style.display = "block";
+    tip.style.left = Math.min(x + 14, W - 270) + "px"; tip.style.top = (y + 12) + "px";
+    const rec = recomendadas.find(r => r.v === v);
+    tip.textContent = `${L[v].nome} · grau ${grau[v]}` + (rec ? ` · distância ${fmt(rec.d, 3)}` : "") + (L[v].paradigmas.length ? `\n${rots(L[v].paradigmas.slice(0, 4))}` : "");
+    tip.style.whiteSpace = "pre-line";
+  } else tip.style.display = "none";
+});
+cv.addEventListener("pointerup", ev => {
+  if (arrasto && !arrasto.moveu) {
+    if (arrasto.v !== -1) selecionar(arrasto.v, false);
+  }
+  arrasto = null; cv.classList.remove("dragging");
+});
+cv.addEventListener("pointerleave", () => { if (!arrasto) { hover = -1; tip.style.display = "none"; desenhar(); } });
+cv.addEventListener("wheel", ev => {
+  ev.preventDefault();
+  const r = cv.getBoundingClientRect(), x = ev.clientX - r.left, y = ev.clientY - r.top;
+  const antes = mundo(x, y);
+  cam.z = Math.max(0.15, Math.min(6, cam.z * Math.exp(-ev.deltaY * 0.0015)));
+  const depois = mundo(x, y);
+  cam.x += antes.x - depois.x; cam.y += antes.y - depois.y;
+  desenhar();
+}, { passive: false });
+
+// =====================================================================
+// Ligações da interface
+// =====================================================================
+function preencherListas() {
+  const dl = $("listaNomes");
+  const ordem = [...L.keys()].sort((a, b) => L[a].nome.localeCompare(L[b].nome));
+  ordem.forEach(i => { const o = document.createElement("option"); o.value = L[i].nome; dl.append(o); });
+  ["trilhaDe", "trilhaAte"].forEach((id, k) => {
+    const s = $(id);
+    ordem.forEach(i => { const o = document.createElement("option"); o.value = i; o.textContent = L[i].nome; s.append(o); });
+    s.value = ordem[k];
+  });
+}
+function acharNome(t) {
+  const n = norm(t.trim()); if (!n) return -1;
+  let i = L.findIndex(l => norm(l.nome) === n);
+  if (i === -1) { const c = L.map((l, k) => k).filter(k => norm(L[k].nome).startsWith(n)); if (c.length === 1) i = c[0]; }
+  return i;
+}
+$("conhecoInput").addEventListener("keydown", ev => {
+  if (ev.key !== "Enter") return;
+  const v = acharNome(ev.target.value);
+  if (v === -1) { ev.target.style.borderColor = cor("--path"); return; }
+  ev.target.style.borderColor = ""; ev.target.value = "";
+  if (!estado.conhecidas.includes(v)) estado.conhecidas.push(v);
+  atualizar();
+});
+$("conhecoInput").addEventListener("change", ev => {
+  // escolher pela lista do datalist já adiciona
+  const v = L.findIndex(l => l.nome === ev.target.value);
+  if (v !== -1) { ev.target.value = ""; if (!estado.conhecidas.includes(v)) estado.conhecidas.push(v); atualizar(); }
+});
+$("kRange").oninput = e => { estado.k = +e.target.value; $("kVal").textContent = estado.k; atualizar(); };
+$("dmaxRange").oninput = e => { estado.dmax = +e.target.value; $("dmaxVal").textContent = estado.dmax >= 3 ? "sem limite" : fmt(estado.dmax, 2); atualizar(); };
+$("texto").oninput = e => { estado.texto = e.target.value; atualizar(); };
+document.querySelectorAll("#modoParadigma button").forEach(b => b.onclick = () => {
+  document.querySelectorAll("#modoParadigma button").forEach(x => x.classList.toggle("on", x === b));
+  estado.modoParadigma = b.dataset.v; atualizar();
+});
+$("limpar").onclick = () => {
+  estado.paradigmas.clear(); estado.forte.clear(); estado.din.clear(); estado.influencia.clear();
+  estado.texto = ""; $("texto").value = ""; montarFiltros(); atualizar();
+};
+$("trilhaBtn").onclick = () => { estado.trilhaPedida = true; tracarTrilha(); };
+$("trilhaLimpa").onclick = () => { estado.trilha = null; estado.trilhaPedida = false; trilhaArestas = new Set(); $("trilhaRes").innerHTML = ""; desenhar(); };
+function mudarCorte(v) {
+  corte = v; $("corteRange").value = v;
+  construir();
+  simular(120);
+  if (estado.trilhaPedida) tracarTrilha();
+  atualizar();
+  if (estado.selecionada !== -1) selecionar(estado.selecionada);
+}
+$("corteRange").oninput = e => mudarCorte(+e.target.value);
+$("corteReset").onclick = () => mudarCorte(CORTE_PY);
+$("mostrarPrim").onchange = () => { simular(150); enquadrar(); };
+$("mostrarNomes").onchange = desenhar;
+$("ajustar").onclick = enquadrar;
+$("reorganizar").onclick = () => { layoutInicial(); simular(400); enquadrar(); };
+$("sobreLink").onclick = ev => {
+  ev.preventDefault();
+  alert("Cada vértice é uma linguagem. A similaridade entre duas linguagens combina Jaccard (paradigmas, tipagem, influências) e TF-IDF + cosseno (aplicação, sintaxe, semântica), com pesos "
+    + DADOS_GRAFO.pesos.jaccard + "/" + DADOS_GRAFO.pesos.cosseno + ".\n\nO peso da aresta é a distância 1 − similaridade, e só existem arestas com similaridade ≥ nota de corte ("
+    + fmt(CORTE_PY) + ", o maior valor que mantém o grafo conexo).\n\nAs recomendações usam Dijkstra a partir das linguagens que você conhece; a trilha é o caminho mínimo entre duas linguagens; a árvore geradora mínima vem do algoritmo de Prim.");
+};
+window.addEventListener("resize", redimensionar);
+
+// início
+$("kVal").textContent = estado.k;
+$("dmaxVal").textContent = "sem limite";
+$("corteRange").value = corte;
+construir();
+preencherListas();
+montarFiltros();
+layoutInicial();
+simular(400);
+redimensionar();
+enquadrar();
+atualizar();
+</script>
+</body>
+</html>
