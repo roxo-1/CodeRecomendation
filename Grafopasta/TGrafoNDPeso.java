@@ -31,15 +31,6 @@ Síntese:
 Como executar (a partir da pasta que contém a pasta Grafopasta):
   javac Grafopasta/TGrafoNDPeso.java
   java Grafopasta.TGrafoNDPeso grafo_java.txt
-
-Histórico de alterações:
-  05/11/2026 - Pedro Gabriel Guimarães Fernandes - unificação das classes
-               TGrafoNDPeso, TGrafoND (Prim) e TGrafoND (Floyd) numa só
-               classe com índices de 0 a n-1; correção de removeAND (testava
-               a condição invertida), de removeVND (recontava arestas com
-               peso == 1) e do caminho de Floyd (limitado a 3 saltos);
-               inclusão de nomes dos vértices, leitura/gravação de arquivo,
-               busca em profundidade, Dijkstra, recomendação e menu.
 */
 
 package Grafopasta;
